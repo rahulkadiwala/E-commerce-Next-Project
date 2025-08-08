@@ -3,17 +3,27 @@
 import { useCartStore } from "@/store/cartStore";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Minus, Plus, X } from "lucide-react";
-import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 export const CartDrawer = () => {
+  const [open, setOpen] = useState(false);
+  const rourter = useRouter();
+
   const cart = useCartStore((state) => state.cart);
   const removeFromCart = useCartStore((state) => state.removeFromCard);
   const increaseQty = useCartStore((state) => state.increaseQty);
   const decreaseQty = useCartStore((state) => state.decreaseQty);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const handleChekout = () => {
+    setOpen(false);
+    rourter.push("/checkout");
+  }
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
         <button className="flex items-center gap-1">
           🛒 Cart ({cart.length})
@@ -65,9 +75,11 @@ export const CartDrawer = () => {
 
           <div className="mt-4">
             <p className="font-semibold">Total: ${total.toFixed(2)}</p>
-            <button className="mt-3 w-full bg-black text-white py-2 rounded">
+            
+            <button className="mt-3 w-full bg-black text-white py-2 rounded" onClick={handleChekout}>
               Checkout
             </button>
+            
           </div>
         </Dialog.Content>
       </Dialog.Portal>

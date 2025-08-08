@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductList } from "@/components/ProductList";
 import { ProductModal } from "@/components/ProductModal";
@@ -15,8 +17,10 @@ export default async function Home() {
   const products = await getProduct();
   return (
     <main className="p-8">
+      <Hero />
       <h1 className="text-2xl font-bold mb-6">All Products</h1>
       <ProductList products={products}/>
+      <Footer />
     </main>
   );
 }

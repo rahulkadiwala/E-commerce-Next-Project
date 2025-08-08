@@ -17,7 +17,7 @@ export const ProductCard = ({ product,onClick }: productProp) => {
       <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
       <p className="text-sm text-gray-600">{product.description}</p>
       <div className="font-bold mt-1">${product.price}</div>
-      <button onClick={() => addToCart(product)} className="mt-2 bg-black text-white px-3 py-1 rounded hover:opacity-90">Add to Cart</button>
+      <button onClick={(e) => { e.stopPropagation(); addToCart(product)}} className="mt-2 bg-black text-white px-3 py-1 rounded hover:opacity-90">Add to Cart</button>
     </div>
   );
 };
