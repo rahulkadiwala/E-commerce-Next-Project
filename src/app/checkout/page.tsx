@@ -1,8 +1,9 @@
 "use client";
 
+import { useAuth } from "@/context/AuthContext";
 import { useCartStore } from "@/store/cartStore";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function CheckOutPage() {
   const router = useRouter();
@@ -26,6 +27,8 @@ export default function CheckOutPage() {
   const isAddressValid = Object.values(address).every(
     (val) => val.trim() !== ""
   );
+
+
 
   const handlePlaceOrder = async () => {
     if (!isAddressValid) {

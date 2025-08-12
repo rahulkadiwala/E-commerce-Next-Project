@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@/context/AuthContext";
 import { useCartStore } from "@/store/cartStore";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Minus, Plus, X } from "lucide-react";
@@ -8,6 +9,8 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export const CartDrawer = () => {
+  const {user,loading} = useAuth();
+  
   const [open, setOpen] = useState(false);
   const rourter = useRouter();
 
@@ -20,6 +23,10 @@ export const CartDrawer = () => {
 
   const handleChekout = () => {
     setOpen(false);
+    console.log(user)
+    // if(!user){
+    //   rourter.push("/login");
+    // }
     rourter.push("/checkout");
   }
   return (
