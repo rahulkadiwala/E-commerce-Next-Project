@@ -8,25 +8,27 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const query = searchParams.get("q");
 
+    let products;
     if (query) {
-      const product = await Product.find({
+      products = await Product.find({
         name: { $regex: query, $options: "i" },
       });
-      return NextResponse.json(product, { status: 200 });
     } else {
-      const product = await Product.find().limit(6);
-      if (product.length === 0) {
-        return NextResponse.json(
-          { message: "no product found" },
-          { status: 404 }
-        );
-      }
-      return NextResponse.json(product, { status: 200 });
+      products = await Product.find().limit(6);
     }
-  } catch (error) {
+
+    if (!products || products.length === 0) {
+      return NextResponse.json(
+        { message: "No product found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(products, { status: 200 });
+  } catch (error: any) {
     return NextResponse.json(
-      { error: "server error", details: error },
-      { status: 501 }
+      { error: "Server error", details: error.message || String(error) },
+      { status: 500 }
     );
   }
 }
@@ -35,16 +37,17 @@ export async function POST(req: NextRequest) {
   try {
     await connectDB();
     const body = await req.json();
+
     const newProduct = await Product.create(body);
-    await newProduct.save();
+
     return NextResponse.json(
-      { message: "Product hs been created" },
+      { message: "Product has been created", product: newProduct },
       { status: 201 }
     );
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json(
-      { error: "server error", details: error },
-      { status: 501 }
+      { error: "Server error", details: error.message || String(error) },
+      { status: 500 }
     );
   }
 }
