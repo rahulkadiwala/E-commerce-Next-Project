@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function createNewProduct(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     await connectDB();
     const body = await req.json();
@@ -47,8 +47,4 @@ export async function createNewProduct(req: NextRequest) {
       { status: 501 }
     );
   }
-}
-
-export async function POST(req: NextRequest) {
-  return await createNewProduct(req);
 }
