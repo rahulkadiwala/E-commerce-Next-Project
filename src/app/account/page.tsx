@@ -1,6 +1,7 @@
 "use client";
 
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { apiFetch } from "@/lib/api";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -13,7 +14,7 @@ export default function Page() {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    fetch("/api/auth/me", {
+    apiFetch("/api/auth/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

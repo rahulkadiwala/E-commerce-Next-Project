@@ -1,7 +1,8 @@
 "use client";
 
+import { apiFetch } from "@/lib/api";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 
 export default function RegistrationPage() {
   const [formData, setFormData] = useState({
@@ -12,28 +13,27 @@ export default function RegistrationPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = async(e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch("/api/auth/register",{
-      method:"POST",
+    const res = await apiFetch("/api/auth/register", {
+      method: "POST",
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
       },
-    })
+    });
 
     const data = await res.json();
-    console.log(data)
+    console.log(data);
 
     if (!res.ok) {
       setError(data.error || "Registration failed");
     } else {
-      alert("Registration complete")
+      alert("Registration complete");
       router.push("/login");
     }
-
-  }
+  };
 
   return (
     <div className="max-w-md mx-auto mt-16 p-6 border rounded shadow">
@@ -55,9 +55,7 @@ export default function RegistrationPage() {
           placeholder="Email"
           required
           value={formData.email}
-          onChange={(e) =>
-            setFormData({ ...formData, email: e.target.value })
-          }
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           className="w-full border p-2 rounded"
         />
         <input

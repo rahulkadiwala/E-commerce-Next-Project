@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
+import { apiFetch } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -16,7 +17,7 @@ export default function Page() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch("/api/auth/login", {
+    const res = await apiFetch("/api/auth/login", {
       method: "POST",
       body: JSON.stringify(loginCredential),
       headers: {

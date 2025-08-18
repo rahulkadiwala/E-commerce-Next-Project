@@ -1,5 +1,6 @@
 "use client";
 
+import { apiFetch } from "@/lib/api";
 import { OrderDocument, OrderItem } from "@/types";
 import { useEffect, useState } from "react";
 
@@ -9,7 +10,7 @@ export default function MyOrders() {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token") || "{}");
     if (user._id) {
-      fetch(`/api/orders?userId=${user._id}`)
+      apiFetch(`/api/orders?userId=${user._id}`)
         .then((res) => res.json())
         .then(setOrders);
     }

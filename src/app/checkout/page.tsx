@@ -1,6 +1,7 @@
 "use client";
 
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { apiFetch } from "@/lib/api";
 import { useCartStore } from "@/store/cartStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -52,7 +53,7 @@ export default function CheckOutPage() {
     };
     console.log(order);
     try {
-      const res = await fetch("/api/orders", {
+      const res = await apiFetch("/api/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,6 +1,7 @@
 "use client";
 
 import { ProductList } from "@/components/ProductList";
+import { apiFetch } from "@/lib/api";
 import { useState } from "react";
 
 export default function SearchPage() {
@@ -12,7 +13,9 @@ export default function SearchPage() {
     if (!query.trim()) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/products?q=${encodeURIComponent(query)}`);
+      const res = await apiFetch(
+        `/api/products?q=${encodeURIComponent(query)}`
+      );
       const data = await res.json();
       setData(data);
     } catch (error) {
