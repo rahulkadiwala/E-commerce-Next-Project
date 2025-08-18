@@ -1,8 +1,8 @@
 import { connectDB } from "@/lib/mongodb";
 import { Product } from "@/models/Product";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     await connectDB();
     const { searchParams } = new URL(req.url);
@@ -31,7 +31,7 @@ export async function GET(req: Request) {
   }
 }
 
-export async function createNewProduct(req: Request) {
+export async function createNewProduct(req: NextRequest) {
   try {
     await connectDB();
     const body = await req.json();
@@ -49,6 +49,6 @@ export async function createNewProduct(req: Request) {
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   return await createNewProduct(req);
 }

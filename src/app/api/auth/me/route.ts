@@ -1,9 +1,9 @@
 import { connectDB } from "@/lib/mongodb";
-import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 import { User } from "@/models/User";
+import jwt from "jsonwebtoken";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     await connectDB();
 

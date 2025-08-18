@@ -2,9 +2,9 @@ import { connectDB } from "@/lib/mongodb";
 import { User } from "@/models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { email, password } = body;
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       process.env.JWT_SECRET as string,
       { expiresIn: "1d" }
     );
-    const { password: _, ...userData } = user.toObject();
+    const { password: _password, ...userData } = user.toObject();
 
     return NextResponse.json(
       { message: "Login successfull", token, user: userData },

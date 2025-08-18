@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { OrderDocument, OrderItem } from "@/types";
+import { useEffect, useState } from "react";
 
 export default function MyOrders() {
   const [orders, setOrders] = useState([]);
@@ -17,7 +18,7 @@ export default function MyOrders() {
     <div className="max-w-4xl mx-auto mt-10">
       <h2 className="text-2xl font-bold mb-6">My Orders</h2>
       {orders.length > 0 ? (
-        orders.map((order: any) => (
+        orders.map((order: OrderDocument) => (
           <div key={order._id} className="border p-4 mb-4 rounded">
             <p>
               <strong>Status:</strong>
@@ -31,7 +32,7 @@ export default function MyOrders() {
               <strong>Items:</strong>
             </p>
             <ul className="pl-4 list-disc">
-              {order?.items?.map((item: any) => (
+              {order?.items?.map((item: OrderItem) => (
                 <li key={item.productId}>
                   {item.name} × {item.quantity}
                 </li>

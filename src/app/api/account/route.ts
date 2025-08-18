@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     const authHeader = req.headers.get("authorization");
 
