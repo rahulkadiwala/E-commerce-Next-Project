@@ -1,7 +1,7 @@
 "use client";
 
 import { ProductList } from "@/components/ProductList";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");

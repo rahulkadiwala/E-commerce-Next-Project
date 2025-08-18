@@ -4,8 +4,10 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function page() {
-  const [user, setUser] = useState(null);
+export default function Page() {
+  const [user, setUser] = useState<{ username: string; email: string } | null>(
+    null
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("token");
