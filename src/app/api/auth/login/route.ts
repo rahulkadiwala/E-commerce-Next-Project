@@ -1,8 +1,8 @@
 import { connectDB } from "@/lib/mongodb";
 import { User } from "@/models/User";
-import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
@@ -28,13 +28,16 @@ export async function POST(req: Request) {
       process.env.JWT_SECRET as string,
       { expiresIn: "1d" }
     );
-    
+    const { password: _, ...userData } = user.toObject();
 
     return NextResponse.json(
-      { message: "Login successfull", token },
+      { message: "Login successfull", token, user: userData },
       { status: 200 }
     );
   } catch (error) {
-    return NextResponse.json({ error: "Server error", deails:error }, { status: 500 });
+    return NextResponse.json(
+      { error: "Server error", deails: error },
+      { status: 500 }
+    );
   }
 }

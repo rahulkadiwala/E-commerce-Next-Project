@@ -1,4 +1,4 @@
-// File: C:\Users\Admin\Downloads\E-commerce- Next.js\my-ecommerce-app\src\app\api\auth\me\route.ts
+// File: D:\Rahul\E-commerce-Next.js\e-commerce-next\src\app\api\auth\me\route.ts
 import * as entry from '../../../../../../src/app/api/auth/me/route.js'
 import type { NextRequest } from 'next/server.js'
 

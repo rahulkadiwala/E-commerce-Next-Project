@@ -1,7 +1,8 @@
 "use client";
 
+import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function page() {
   const [user, setUser] = useState(null);
@@ -24,25 +25,27 @@ export default function page() {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto mt-10">
-      {user ? (
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold">Welcome, {user.username}</h1>
-          <p>Email: {user.email}</p>
-        </div>
-      ) : (
-        <div>
-          <center>
-            Login to view Account
-            <Link
-              className="bg-gray-700 text-white px-4 py-2 mt-5 hover:bg-gray-900 rounded ml-6"
-              href={"/login"}
-            >
-              Login
-            </Link>
-          </center>
-        </div>
-      )}
-    </div>
+    <ProtectedRoute>
+      <div className="max-w-4xl mx-auto mt-10">
+        {user ? (
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold">Welcome, {user.username}</h1>
+            <p>Email: {user.email}</p>
+          </div>
+        ) : (
+          <div>
+            <center>
+              Login to view Account
+              <Link
+                className="bg-gray-700 text-white px-4 py-2 mt-5 hover:bg-gray-900 rounded ml-6"
+                href={"/login"}
+              >
+                Login
+              </Link>
+            </center>
+          </div>
+        )}
+      </div>
+    </ProtectedRoute>
   );
 }

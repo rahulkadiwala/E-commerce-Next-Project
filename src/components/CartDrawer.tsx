@@ -4,15 +4,15 @@ import { useAuth } from "@/context/AuthContext";
 import { useCartStore } from "@/store/cartStore";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Minus, Plus, X } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const CartDrawer = () => {
-  const {user,loading} = useAuth();
-  
+  const { user, loading } = useAuth();
+
   const [open, setOpen] = useState(false);
-  const rourter = useRouter();
+  const router = useRouter();
 
   const cart = useCartStore((state) => state.cart);
   const removeFromCart = useCartStore((state) => state.removeFromCard);
@@ -20,15 +20,11 @@ export const CartDrawer = () => {
   const decreaseQty = useCartStore((state) => state.decreaseQty);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
+  const buttonDisabled = cart.length < 1;
   const handleChekout = () => {
     setOpen(false);
-    console.log(user)
-    // if(!user){
-    //   rourter.push("/login");
-    // }
-    rourter.push("/checkout");
-  }
+    router.push("/checkout");
+  };
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
@@ -82,11 +78,19 @@ export const CartDrawer = () => {
 
           <div className="mt-4">
             <p className="font-semibold">Total: ${total.toFixed(2)}</p>
-            
-            <button className="mt-3 w-full bg-black text-white py-2 rounded" onClick={handleChekout}>
-              Checkout
-            </button>
-            
+            <ProtectedRoute>
+              <button
+                className={
+                  buttonDisabled
+                    ? " mt-3 w-full bg-gray-400 text-white py-2 rounded"
+                    : "mt-3 w-full bg-black text-white py-2 rounded"
+                }
+                onClick={handleChekout}
+                disabled={buttonDisabled}
+              >
+                Checkout
+              </button>
+            </ProtectedRoute>
           </div>
         </Dialog.Content>
       </Dialog.Portal>

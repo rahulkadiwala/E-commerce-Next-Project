@@ -11,7 +11,7 @@ export default function page() {
   });
   const [error, setError] = useState("");
   const router = useRouter();
-  const {setUser} = useAuth();
+  const { setUser } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,11 +25,11 @@ export default function page() {
     });
 
     const data = await res.json();
-    console.log(data)
+    console.log(data);
     if (!res.ok) {
       setError(data.message || "Login failed");
     } else {
-      localStorage.setItem("token",data.token);
+      localStorage.setItem("token", data.token);
       console.log(data);
       setUser(data.user);
       router.push("/");
