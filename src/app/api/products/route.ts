@@ -5,8 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     await connectDB();
-    const { searchParams } = new URL(req.url);
-    const query = searchParams.get("q");
+    const query = req.nextUrl.searchParams.get("q");
 
     let products;
     if (query) {

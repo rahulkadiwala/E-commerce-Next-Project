@@ -25,8 +25,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("userId");
+    const userId = req.nextUrl.searchParams.get("userId");
 
     await connectDB();
     const orderData = await Order.find(userId ? { userId } : {});
