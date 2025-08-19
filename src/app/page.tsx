@@ -22,7 +22,11 @@ export default async function Home() {
     <main className="p-8">
       <Hero />
       <h1 className="text-2xl font-bold mb-6">All Products</h1>
-      <ProductList products={products} />
+      {products.length === 0 ? (
+        <p className="text-gray-500">No products available.</p>
+      ) : (
+        <ProductList products={products} />
+      )}
       <Footer />
     </main>
   );
