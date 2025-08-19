@@ -15,23 +15,21 @@ export default function RegistrationPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setError(""); // clear old errors
 
-    const res = await apiFetch("/api/auth/register", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const data = await apiFetch("/api/auth/register", {
+        method: "POST",
+        body: formData, // ✅ don't stringify
+      });
 
-    const data = await res.json();
-    console.log(data);
+      console.log("API response:", data);
 
-    if (!res.ok) {
-      setError(data.error || "Registration failed");
-    } else {
       alert("Registration complete");
       router.push("/login");
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Registration failed");
     }
   };
 

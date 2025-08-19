@@ -6,14 +6,15 @@ import { Product } from "@/types";
 
 async function getProduct(): Promise<Product[]> {
   const res = await apiFetch("/api/products");
+  console.log(res);
 
   if (res.status === 404) {
     return [];
   }
-  if (!res.ok) {
-    throw new Error("Failed to fetch products");
-  }
-  return res.json();
+  // if (!res.ok) {
+  //   throw new Error("Failed to fetch products");
+  // }
+  return res;
 }
 
 export default async function Home() {

@@ -16,26 +16,28 @@ export default function Page() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(""); // clear previous error
 
-    const res = await apiFetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(loginCredential),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const res = await apiFetch("/api/auth/login", {
+        method: "POST",
+        body: loginCredential, // ✅ no stringify, apiFetch does it
+      });
 
-    const data = await res.json();
-    console.log(data);
-    if (!res.ok) {
-      setError(data.message || "Login failed");
-    } else {
-      localStorage.setItem("token", data.token);
-      console.log(data);
-      setUser(data.user);
+      // res is already JSON (from your API)
+      console.log("Login response:", res);
+
+      // if your backend returns { token, user }
+      localStorage.setItem("token", res.token);
+      setUser(res.user);
+
       router.push("/");
+    } catch (err: any) {
+      console.error("Login error:", err);
+      setError(err.message || "Login failed");
     }
   };
+
   return (
     <div className="max-w-md mx-auto mt-16 p-6 border rounded shadow">
       <h1 className="text-2xl font-bold mb-4">Login</h1>

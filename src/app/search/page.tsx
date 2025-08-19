@@ -16,7 +16,7 @@ export default function SearchPage() {
       const res = await apiFetch(
         `/api/products?q=${encodeURIComponent(query)}`
       );
-      const data = await res.json();
+      const data = await res;
       setData(data);
     } catch (error) {
       console.error("Search failed", error);

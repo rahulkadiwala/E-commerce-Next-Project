@@ -58,10 +58,11 @@ export default function CheckOutPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(order),
+        body: order,
       });
+      console.log(res);
 
-      if (res.ok) {
+      if (res) {
         clearCart();
         alert("Order placed successfully!");
         router.push("/");

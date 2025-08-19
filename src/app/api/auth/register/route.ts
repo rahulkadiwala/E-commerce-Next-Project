@@ -6,9 +6,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    console.log("Raw body:", body);
     const { username, email, password } = body;
+    console.log("username:", username, "email:", email, "password:", password);
 
-    connectDB();
+    await connectDB();
 
     const isUserNameTaken = await User.findOne({ username });
     if (isUserNameTaken) {
@@ -39,6 +41,7 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { error: "Server error", details: error },
       { status: 500 }

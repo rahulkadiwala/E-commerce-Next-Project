@@ -21,7 +21,7 @@ export default function Page() {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => res)
       .then((data) => setUser(data.user));
 
     //order logic ... . .. ..
